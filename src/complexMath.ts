@@ -60,7 +60,7 @@ function parseFunction(input: string): Expression | null {
 
     while (
       index < tokens.length &&
-      (tokens[index] === "*" || tokens[index] === "/")
+      (tokens[index] === "*" || tokens[index] === "/" || tokens[index] === "^")
     ) {
       const operator = tokens[index++] as Operator;
       const right = parseFactor();
@@ -171,6 +171,12 @@ function evaluateFunction(expr: Expression | null, z: Complex): Complex {
     case "variable":
       return z;
   }
+}
+
+export function createEvaluator(
+  expr: Expression | null
+): (z: Complex) => Complex {
+  return (z: Complex) => evaluateFunction(expr, z);
 }
 
 export { parseFunction, evaluateFunction };
